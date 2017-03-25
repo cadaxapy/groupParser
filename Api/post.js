@@ -1,4 +1,4 @@
-var request = require('request');
+var request = require('superagent');
 
 module.exports = function(api, config) {
 	api.postContent = function(token, content, group_id, callback) {
@@ -10,17 +10,12 @@ module.exports = function(api, config) {
 			attachments: content.attachments,
 			comment_enabled: 1
 		}
-		request.post({
-			url: config.API + '/groups/' + group_id + '/post',
-			headers: {
-				'X-Namba-Auth-Token': token 
-			},
-			rejectUnauthorized: false,
-			data: data,
-			json: true
-		}, function(err, res, page) {
-			console.log(err);
-			console.log(page);
+		request.post(config.API + '/groups/' + group_id + '/post')
+			.set('X-Namba-Auth-Token', token)
+			.set('Content-Type', 'application/json')
+			.send(data)
+			.end(function(err, page) {
+			console.log(page.body);
 			callback(page);
 		})
 	}

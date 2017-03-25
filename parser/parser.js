@@ -87,7 +87,6 @@ parseImage = function(url, cb) {
 					}
 				}
 			}, function(err, res, body) {
-				console.log(body);
 				cb(body.file);
 			});
 		})
