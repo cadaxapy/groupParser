@@ -1,12 +1,12 @@
 var request=require("superagent");
 var cheerio=require("cheerio");
 
-	request.get("http://diesel.elcat.kg/index.php?showtopic=291796500").end(function(err, page) {
+	request.get("http://diesel.elcat.kg/index.php?s=85c143a3db0918adc89213efb4ec3a63&showtopic=291799497").end(function(err, page) {
 		console.log("asd");
 		var $ = cheerio.load(page.text);
 		var imageUrls = [];
 		console.log($('div[class="post_body"] > div[itemprop="commentText"]').first().contents().filter(function() {
-    return this.type === 'text';
+    return this.type === 'text' || (this.name === 'p' && Object.keys(this.attribs).length === 0);
 }).text().trim());
 		var data = {
 			attachments: [],

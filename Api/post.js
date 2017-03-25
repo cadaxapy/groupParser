@@ -7,8 +7,10 @@ module.exports = function(api, config) {
 		}
 		var data = {
 			content: content.content,
-			attachments: content.attachments,
 			comment_enabled: 1
+		}
+		if(content.attachments) {
+			data.attachments = content.attachments;
 		}
 		request.post(config.API + '/groups/' + group_id + '/post')
 			.set('X-Namba-Auth-Token', token)

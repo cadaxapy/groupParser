@@ -5,9 +5,10 @@ var request2 = require('request');
 var config = require('../config.js');
 var fs = require('fs');
 module.exports.parseTopic = function(url, group, callback) {
-	request.get(url).retry(5).end(function(err, page) {
+	return request.get(url).retry(5).end(function(err, page) {
 		var $ = cheerio.load(page.text);
 		var posted = new Date($('div[class="post_body"] > p > abbr[class="published"]').attr('title'));
+		console.log(group.last_parsed_date);
 		if(group.last_parsed_date > posted) {
 			return callback(null);
 		}
@@ -15,13 +16,14 @@ module.exports.parseTopic = function(url, group, callback) {
 		var data = {
 			attachments: [],
 			content: $('div[class="post_body"] > div[itemprop="commentText"]').first().contents().filter(function() {
-	return this.type === 'text';
+	return this.type === 'text' || (this.name === 'p' && Object.keys(this.attribs).length === 0);
 }).text().trim()
 		}
 		$('div[class="post_body"] > div > div > ul > li > a').each(function(i, title) {
 			imageUrls.push($(title).attr('href'));
 		});
-		
+		console.log(data);
+		console.log(url);
 		async.map(imageUrls, function(imageUrl, innerCallback) {			
 			parseImage(imageUrl, function(token) {
 				var data = {
@@ -31,7 +33,7 @@ module.exports.parseTopic = function(url, group, callback) {
 				return innerCallback(null, data);
 			})
 		}, function(err, attachments) {
-			if(Array.isArray(attachments)) {
+			if(attachments) {
 				data.attachments = attachments;
 		}
 			console.log('Topic successfuly parsed');
