@@ -15,6 +15,7 @@ module.exports = function(api, config) {
 			headers: {
 				'X-Namba-Auth-Token': token 
 			},
+			rejectUnauthorized: false,
 			data: data,
 			json: true
 		}, function(err, res, page) {

@@ -2,7 +2,7 @@ var db = require('./models');
 var async = require('async');
 var parser = require('./parser/parser.js');
 module.exports = function(api) {
-	setInterval(function() {
+	setTimeout(function() {
 		db.Group.findAll().then(function(groups) {
 			async.each(groups, function(group, callback) {
 				(new Promise(function(resolve) {
@@ -39,5 +39,5 @@ module.exports = function(api) {
 	 			});
 			})
 		})
-	}, 3600000);
+	}, 10000);
 }
