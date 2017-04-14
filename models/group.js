@@ -16,7 +16,9 @@ module.exports = function(sequelize, DataTypes) {
     },
     last_parsed_date: {
       type: DataTypes.DATE
-    }
+    },
+    user_phone: DataTypes.INTEGER,
+    user_password: DataTypes.STRING,
   }, {
     hooks: { 
       afterUpdate: function(group) {
