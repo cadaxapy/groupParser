@@ -8,7 +8,6 @@ module.exports.parseTopic = function(url, group, callback) {
 	return request.get(url).retry(5).end(function(err, page) {
 		var $ = cheerio.load(page.text);
 		var posted = new Date($('div[class="post_body"] > p > abbr[class="published"]').attr('title'));
-		console.log(group.last_parsed_date);
 		if(group.last_parsed_date > posted) {
 			return callback(null);
 		}
@@ -22,8 +21,6 @@ module.exports.parseTopic = function(url, group, callback) {
 		$('div[class="post_body"] > div > div > ul > li > a').each(function(i, title) {
 			imageUrls.push($(title).attr('href'));
 		});
-		console.log(data);
-		console.log(url);
 		async.map(imageUrls, function(imageUrl, innerCallback) {			
 			parseImage(imageUrl, function(token) {
 				var data = {
@@ -67,7 +64,7 @@ module.exports.parseTheme = function(url ,callback) {
 			}
 		})
 		console.log('Theme successfuly parsed');
-		callback(topicUrl);
+		callback(topicUrl.slice(0, 1));
 	})
 }
 
