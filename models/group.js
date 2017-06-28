@@ -17,6 +17,10 @@ module.exports = function(sequelize, DataTypes) {
     last_parsed_date: {
       type: DataTypes.DATE
     },
+    parserType : {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     user_phone: DataTypes.STRING,
     user_password: DataTypes.STRING,
   }, {

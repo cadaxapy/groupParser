@@ -1,6 +1,7 @@
 var db = require('./models');
 var async = require('async');
 var parser = require('./parser/parser.js');
+var control = require('./control');
 module.exports = function(api) {
   setInterval(function() {
     db.Group.findAll().then(function(groups) {
@@ -21,7 +22,13 @@ module.exports = function(api) {
           }
           resolve(group);
         })).then(function(group) {
-          parser.parseTheme(group.forum_url, function(themes) {
+          control[group.parserType](group, api).then(function() {
+            group.set('last_parsed_date', new Date());
+            group.save(function() {
+              callback();
+            })
+          })
+          /*parser.parseTheme(group.forum_url, function(themes) {
             async.each(themes, function(theme, themeCallback) {
               parser.parseTopic(theme, group, function(topic) {
                 api.postContent(group.user_token, topic, group.group_id, function() {
@@ -35,9 +42,9 @@ module.exports = function(api) {
                 callback();
               });
             })
-          })
+          })*/
         });
       })
     })
-  }, 3600000);
+  }, 3600000);//3600000
 }
