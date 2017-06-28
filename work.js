@@ -12,6 +12,7 @@ module.exports = function(api) {
                 throw new Error(err);
               }
               console.log("TOKen UPDATED");
+	      console.log(res.body);
               group.set('user_token', res.body.data.token);
               group.set('user_token_last_update', new Date());
               return group.save().then(function(group) {
