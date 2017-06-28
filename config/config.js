@@ -4,7 +4,7 @@ module.exports = {
 	FS: 'https://files.namba1.co',
 	development: {
 	    username: 'root',
-	    password: 'root',
+	    password: 'xynd4815162342',
 	    database: 'parserDb',
 	    host: '127.0.0.1',
 	    dialect: 'mysql',
