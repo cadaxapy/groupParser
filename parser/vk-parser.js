@@ -15,7 +15,7 @@ parse.parseContent = function(group, api) {
   return new Promise(function(resolve, reject) {
     vk.request('wall.get', {domain: group.forum_url}, function(body) {
       async.map(body.response.items, function(item, callback) {
-        if(group.last_parsed_date > new Date(item.date * 1000)) {
+        if((group.last_parsed_date > new Date(item.date * 1000)) || item.copy_history) {
           return callback();
         }
         async.map(item.attachments, function(attachment, callback2) {
