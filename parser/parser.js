@@ -3,7 +3,7 @@ var request = require('superagent');
 var async = require('async');
 var request2 = require('request');
 var config = require('../config.js');
-var parseImage = require('./parseImage.js');
+var parseImage = require('./parseImage.js').parseImage;
 var fs = require('fs');
 module.exports.parseTopic = function(url, group, callback) {
 	return request.get(url).retry(5).end(function(err, page) {

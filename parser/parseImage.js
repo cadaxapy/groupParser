@@ -1,8 +1,8 @@
 var request2 = require('request');
-module.exports = function(url, cb) {
+module.exports.parseImage = function(url, cb) {
     request2({url: url, encoding: null, timeout: 10000}, function(err, res, page) {
       if(!page) {
-        return this(url, cb);
+        return parseImage(url, cb);
       }
       request2.post({
         url: 'https://files.namba1.co',

@@ -1,7 +1,7 @@
 var request = require('request');
 var VK = require('vksdk');
 var async = require('async');
-var parseImage = require('./parseImage.js');
+var parseImage = require('./parseImage.js').parseImage;
 var vk = new VK({
    'appId'     : 6089855,
    'appSecret' : 'mdu5h8ve5HmWwLYW97SN',
