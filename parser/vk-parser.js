@@ -15,7 +15,7 @@ parse.parseContent = function(group, api) {
   return new Promise(function(resolve, reject) {
     var searchParams = {};
     if(group.forum_url.substring(0, 6) == 'public') {
-      searchParams.owner_id  = '-' + group.forum_url;
+      searchParams.owner_id  = '-' + group.forum_url.substring(6);
 
     } else {
       searchParams.domain = group.forum_url;
