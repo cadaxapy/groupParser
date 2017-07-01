@@ -13,6 +13,13 @@ var parse = {};
 
 parse.parseContent = function(group, api) {
   return new Promise(function(resolve, reject) {
+    var searchParams = {};
+    if(group.forum_url.substring(0, 6) == 'public') {
+      searchParams.owner_id  = '-' + group.forum_url;
+
+    } else {
+      searchParams.domain = group.forum_url;
+    }
     vk.request('wall.get', {domain: group.forum_url}, function(body) {
 	console.log(body);
       async.map(body.response.items, function(item, callback) {
