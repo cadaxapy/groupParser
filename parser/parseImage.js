@@ -1,8 +1,9 @@
 var request2 = require('request');
-module.exports.parseImage = function(url, cb) {
+var obj = {};
+obj.parseImage = function(url, cb) {
     request2({url: url, encoding: null, timeout: 10000}, function(err, res, page) {
       if(!page) {
-        return parseImage(url, cb);
+        return obj.parseImage(url, cb);
       }
       request2.post({
         url: 'https://files.namba1.co',
@@ -20,3 +21,4 @@ module.exports.parseImage = function(url, cb) {
       });
     })
 }
+module.exports = obj;
