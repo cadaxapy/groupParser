@@ -17,7 +17,10 @@ module.exports = function(api, config) {
       .set('Content-Type', 'application/json')
       .send(data)
       .end(function(err, page) {
-      callback(page);
+        if(err) {
+          console.log(err);
+        }
+        callback(page);
     })
   }
 }
