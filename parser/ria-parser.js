@@ -2,7 +2,6 @@ var cheerio = require('cheerio');
 var request = require('request');
 var utf = require('utf8')
 var async = require('async');
-var request2 = require('request');
 var config = require('../config.js');
 var parseImage = require('./parseImage.js').parseImage;
 var fs = require('fs');
@@ -34,16 +33,17 @@ var parse = {
         var output = title + '\n\n' + $('div[class="b-article__body js-mediator-article mia-analytics"] > p').contents().filter(function() {
           return this.type == 'text' || this.name == 'strong' || this.name == 'a';
         }).text();
-        console.log($('div[class="l-photoview__open"] > img').attr('src'));
-        parseImage($('div[class="l-photoview__open"] > img').attr('src'), function(imageToken) {
-          resolve({
-            content: output,
-            attachments: [{
-              type: 'text/plain',
-              content: imageToken
-            }]
+        if($('div[class="l-photoview__open"] > img').attr('src')) {
+          parseImage($('div[class="l-photoview__open"] > img').attr('src'), function(imageToken) {
+            resolve({
+              content: output,
+              attachments: [{
+                type: 'text/plain',
+                content: imageToken
+              }]
+            })
           })
-        })
+        }
       });
     });
   }
