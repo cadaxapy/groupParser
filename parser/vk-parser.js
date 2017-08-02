@@ -22,8 +22,6 @@ parse.parseContent = function(group, api) {
     }
 
     vk.request('wall.get', searchParams, function(body) {
-	console.log(body);
-	console.log(searchParams);
       async.map(body.response.items, function(item, callback) {
         if((group.last_parsed_date > new Date(item.date * 1000)) || item.copy_history) {
           return callback();
@@ -45,6 +43,7 @@ parse.parseContent = function(group, api) {
           if(attachments) {
             data.attachments = attachments;
           }
+	console.log(data);
           api.postContent(group.user_token, data, group.group_id, function() {
             callback();
           })

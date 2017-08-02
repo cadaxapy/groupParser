@@ -23,6 +23,7 @@ module.exports = function(api) {
           }
           resolve(group);
         })).then(function(group) {
+	console.log('parsing started');
           control[group.parserType](group, api).then(function() {
             group.set('last_parsed_date', new Date());
             group.save(function() {
@@ -47,5 +48,5 @@ module.exports = function(api) {
         });
       })
     })
-  }, 50000);//3600000
+  }, 3600000);//3600000
 }
