@@ -45,7 +45,7 @@ module.exports = {
   ria_parser: function(group, api) {
     return new Promise(function(resolve, reject) {
       ria.parseThemes({group: group}).then(function(topics) {
-        async.each(topics, function(topic, callback) {
+        async.eachSeries(topics, function(topic, callback) {
           ria.parseTopic({group: group, url: group.forum_url + topic}).then(function(content) {
             api.postContent(group.user_token, content, group.group_id, function() {
               callback();
