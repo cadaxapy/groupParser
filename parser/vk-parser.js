@@ -22,7 +22,7 @@ parse.parseContent = function(group, api) {
     }
     vk.request('wall.get', searchParams, function(body) {
       async.map(body.response.items, function(item, callback) {
-        if((group.last_parsed_date > new Date(item.date * 1000)) || item.copy_history) {
+        if((group.last_parsed_date > new Date(item.date * 1000)) || item.copy_history || (item.attachments.length == 1 && item.attachments[0].type != 'photo')) {
           return callback();
         }
         async.map(item.attachments, function(attachment, callback2) {
