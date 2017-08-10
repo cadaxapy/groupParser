@@ -47,7 +47,7 @@ var parse = {
         async.map(urls, function(url, callback) {
           parseImage(url, function(imageToken) {
             var content = {
-              type: 'text/plain',
+              type: 'media/image',
               content: imageToken
             }
             callback(null, content);
