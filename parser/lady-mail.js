@@ -45,7 +45,7 @@ var parse = {
             var $ = cheerio.load(body);
             parseImage($('meta[property="og:image"]').attr('content'), function(imageToken) {
               var content = {
-                type: 'text/plain',
+                type: 'media/image',
                 content: imageToken 
               }
               callback(null, content);

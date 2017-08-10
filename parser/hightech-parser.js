@@ -43,7 +43,7 @@ var parse = {
           var content = {
             content: output,
             attachments: [{
-              type: 'text/plain',
+              type: 'media/image',
               content: imageToken 
             }]
           }

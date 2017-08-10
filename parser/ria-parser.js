@@ -38,7 +38,7 @@ var parse = {
             resolve({
               content: output,
               attachments: [{
-                type: 'text/plain',
+                type: 'media/image',
                 content: imageToken
               }]
             })

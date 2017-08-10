@@ -31,18 +31,18 @@ parse.parseContent = function(group, api) {
           }
           parseImage(attachment.photo.photo_604, function(imageToken) {
             var data = {
-              type: 'media/text',
+              type: 'media/image',
               content: imageToken
             }
             callback2(null, data);
           })
         }, function(err, attachments) {
           var data = {};
-          data.content = item.text;
+          data.content = item.text.length > 1 ? item.text : ".";
           if(attachments) {
             data.attachments = attachments;
           }
-          api.postContent(group.user_token, data, group.group_id, function() {
+          api.postContent(group.user_token, data, group.group_id, function(page) {
             callback();
           })
         })
