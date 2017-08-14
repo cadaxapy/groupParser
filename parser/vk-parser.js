@@ -28,7 +28,7 @@ parse.parseContent = function(group, api) {
         }
         async.map(item.attachments, function(attachment, callback2) {
           if(attachment.type != 'photo') {
-            return callback2();
+            return callback2(null, null);
           }
           parseImage(attachment.photo.photo_604, function(imageToken) {
             var data = {
@@ -41,6 +41,9 @@ parse.parseContent = function(group, api) {
           var data = {};
           data.content = item.text.length > 1 ? item.text : ".";
           if(attachments) {
+            attachments = attachments.filter(function(e) {
+              return e != null;
+            })
             data.attachments = attachments;
           }
           api.postContent(group.user_token, data, group.group_id, function(page) {
