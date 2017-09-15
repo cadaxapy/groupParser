@@ -1,6 +1,7 @@
 var request = require('request');
 var VK = require('vksdk');
 var async = require('async');
+var config = require('../config.js');
 var parseImage = require('./parseImage.js').parseImage;
 var vk = new VK({
    'appId'     : 6089855,
@@ -21,7 +22,7 @@ parse.parseContent = function(group, api) {
       searchParams.domain = group.forum_url;
     }
     vk.request('wall.get', searchParams, function(body) {
-      async.map(body.response.items, function(item, callback) {
+      async.map(body.response.items.slice(0, config.POST_PER_INTERVAL), function(item, callback) {
         if((group.last_parsed_date > new Date(item.date * 1000)) || item.copy_history || (item.attachments && item.attachments.length == 1 && item.attachments[0].type != 'photo')) {
           return callback();
         }

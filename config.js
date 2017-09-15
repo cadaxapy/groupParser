@@ -2,6 +2,7 @@ module.exports = {
 	ROOT_DIR: __dirname,
 	API: 'https://api.namba1.co',
 	FS: 'https://files.namba1.co',
+  POST_PER_INTERVAL: 1,
 	development: {
 	    username: 'root',
 	    password: 'root',

@@ -25,7 +25,7 @@ var parse = {
             output.push(url);
           }
         })
-        resolve(output);
+        resolve(output.slice(0, config.POST_PER_INTERVAL));
       })
     })
   },
