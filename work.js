@@ -3,8 +3,9 @@ var async = require('async');
 var parser = require('./parser/parser.js');
 var control = require('./control');
 module.exports = function(api) {
-  setInterval(function() {
+  setTimeout(function() {
     db.Group.findAll().then(function(groups) {
+	console.log('hello');
       async.each(groups, function(group, callback) {
         (new Promise(function(resolve) {
           if((Date.now() - group.get('user_token_last_update') ) / 3600000 > 23) {
@@ -48,5 +49,5 @@ module.exports = function(api) {
         });
       })
     })
-  }, 3600000 * 4);//3600000
+  }, 4000);//3600000
 }

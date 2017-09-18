@@ -25,10 +25,12 @@ parse.parseContent = function(group, api) {
     }
 
     vk.request('wall.get', searchParams, function(body) {
+      console.log(body.response.items);
       async.map(body.response.items, function(item, callback) {
         if((group.last_parsed_date > new Date(item.date * 1000)) || item.copy_history || (item.attachments && item.attachments.length == 1 && item.attachments[0].type != 'photo')) {
           return callback();
         }
+	console.log(item);
         async.map(item.attachments, function(attachment, callback2) {
           if(attachment.type != 'photo') {
             return callback2(null, null);
