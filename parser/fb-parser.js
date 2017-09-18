@@ -1,6 +1,7 @@
 var request = require('request');
 var FB = require('fb');
 var async = require('async');
+var config = require('../config.js');
 var parseImage = require('./parseImage.js').parseImage;
 var fb = new FB.Facebook({
    'appId'     : '114646395863060',
@@ -14,7 +15,7 @@ module.exports.parseContent = function(group, api) {
         console.log(!res ? 'error occurred' : res.error);
         return resolve();
       }
-      async.each(res.data, function(post, callback) {
+      async.each(res.data.slice(0, config.POST_PER_INTERVAL), function(post, callback) {
         if(!post.message || (group.last_parsed_date > new Date(post.created_time))) {
           return callback();
         }
