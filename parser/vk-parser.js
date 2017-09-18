@@ -14,7 +14,9 @@ var parse = {};
 
 parse.parseContent = function(group, api) {
   return new Promise(function(resolve, reject) {
-    var searchParams = {};
+    var searchParams = {
+      count: config.POST_PER_INTERVAL
+    };
     if(group.forum_url.substring(0, 6) == 'public') {
       searchParams.owner_id  = '-' + group.forum_url.substring(6);
 
@@ -22,7 +24,7 @@ parse.parseContent = function(group, api) {
       searchParams.domain = group.forum_url;
     }
     vk.request('wall.get', searchParams, function(body) {
-      async.map(body.response.items.slice(0, config.POST_PER_INTERVAL), function(item, callback) {
+      async.map(body.response.items, function(item, callback) {
         if((group.last_parsed_date > new Date(item.date * 1000)) || item.copy_history || (item.attachments && item.attachments.length == 1 && item.attachments[0].type != 'photo')) {
           return callback();
         }
