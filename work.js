@@ -3,7 +3,7 @@ var async = require('async');
 var parser = require('./parser/parser.js');
 var control = require('./control');
 module.exports = function(api) {
-  setTimeout(function() {
+  setInterval(function() {
     db.Group.findAll().then(function(groups) {
 	console.log('hello');
       async.each(groups, function(group, callback) {
@@ -49,5 +49,5 @@ module.exports = function(api) {
         });
       })
     })
-  }, 4000);//3600000
+  }, 3600000 * 4);//3600000
 }
