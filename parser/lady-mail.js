@@ -30,12 +30,13 @@ var parse = {
       request({uri: data.url, method: 'GET'}, function(err, res, body) {
         var instagramUrls = [];
         var $ = cheerio.load(body);
-        output = $('span[class="hdr_text"] > span[class="hdr__inner"]').text() + '\n\n';
+        output = $('span[class="hdr__text"] > h1[class="hdr__inner"]').text().trim() + '\n\nЧитать подробнее: ' + data.url;
+        /*output = $('span[class="hdr_text"] > span[class="hdr__inner"]').text() + '\n\n';
         $('div[class="article__text article__text_lady js-module js-article_text margin_bottom_20 js-mediator-article"]').contents().filter(function() {
           return (this.name == 'div' && this.attribs.class == 'article__item article__item_alignment_left article__item_html');
         }).each(function(i, e) {
           output += $(e).text().trim() + '\n';
-        });
+        });*/
         $('div[class="article__text article__text_lady js-module js-article_text margin_bottom_20 js-mediator-article"] > div[class="article__item article__item_alignment_left article__item_embed article__item_source_instagram"]')
         .each(function(i, title) {
           instagramUrls.push($(title).children('div').children('textarea').children('blockquote').children('div').children('p').children('a').attr('href'));
@@ -46,16 +47,12 @@ var parse = {
             parseImage($('meta[property="og:image"]').attr('content'), function(imageToken) {
               var content = {
                 type: 'media/image',
-                content: imageToken 
+                content: imageToken
               }
               callback(null, content);
             })
           })
         }, function(err, data) {
-          console.log({
-            content: output,
-            attachments: data
-          })
           resolve({
             content: output,
             attachments: data
