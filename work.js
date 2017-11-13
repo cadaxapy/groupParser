@@ -4,7 +4,11 @@ var parser = require('./parser/parser.js');
 var control = require('./control');
 module.exports = function(api) {
   setInterval(function() {
-    db.Group.findAll().then(function(groups) {
+    db.Group.findAll({
+      where: {
+        active: true
+      }
+    }).then(function(groups) {
       async.each(groups, function(group, callback) {
         (new Promise(function(resolve) {
           if((Date.now() - group.get('user_token_last_update') ) / 3600000 > 23) {
